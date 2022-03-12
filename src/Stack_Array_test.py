@@ -8,12 +8,12 @@ class Test_Stack_Array(unittest.TestCase):
   
     def testSize(self):
         self.myArrayListVariable.push(9)
-        self.assertEqual(self.myArrayListVariable.getStackCount(), 1)
+        self.assertEqual(self.myArrayListVariable.size(), 1)
 
     def testPush(self):
         myArrayListStack = StackArray()
         myArrayListStack.push(9)
-        self.assertEqual(myArrayListStack.getStackCount(), 1)
+        self.assertEqual(myArrayListStack.size(), 1)
 
     def testIsEmpty(self):
         myArrayListStack = StackArray()
@@ -37,7 +37,7 @@ class Test_Stack_Array(unittest.TestCase):
         myArrayListStack = StackArray()
         for i in range(0,1000):
             myArrayListStack.push(i)
-        self.assertEqual(myArrayListStack.getStackCount(), 1000)
+        self.assertEqual(myArrayListStack.size(), 1000)
         self.assertFalse(myArrayListStack.isEmpty(), 
         "Adding multiple entries invalidated the isEmpty function")
 
@@ -45,7 +45,7 @@ class Test_Stack_Array(unittest.TestCase):
     def testPop(self):
         myArrayListStack = StackArray()
         myArrayListStack.push(1)
-        self.assertEqual(myArrayListStack.getStackCount(), 1)
+        self.assertEqual(myArrayListStack.size(), 1)
         myArrayListStack.pop()
         self.assertTrue(myArrayListStack.isEmpty())
 
