@@ -7,7 +7,7 @@ class Test_Queue_Array(unittest.TestCase):
         self.myBt = BinaryTree()
   
     def testSize(self):
-        self.myBt.add(9)
+        self.myBt.insert(9)
         self.assertEqual(self.myBt.size(), 1)
 
     def testInsertNode(self):
