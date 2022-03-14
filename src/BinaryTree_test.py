@@ -80,36 +80,37 @@ class Test_Queue_Array(unittest.TestCase):
         treeDepth = myBst.getTreeDepth(myBst.root)
         self.assertEqual(treeDepth, 3)
 
-    # heigh balanced BST is defined as 
-    # a binary tree in which the left and right subtrees 
-    # of every node differ in height by no more than 1.
-    def testIsBstBalanced(self):
-        pass
-
+  
     def testPreOrderTraversal(self):
         myBst = self.configureBaseBT()
-        PreOrderTraversal = myBst.printPreOrderTraversal(myBst.root)
-        self.assertEqual(PreOrderTraversal,[50, 30, 20, None, None, 40, None, None, 70, 60, None, None, 80, None, None])
+        PreOrderTraversal = myBst.PreOrderTraversal(myBst.root)
+        self.assertEqual(PreOrderTraversal,[50, 30, 20, 40, 70, 60, 80])
 
     def testInOrderTraversal(self):
         myBst = self.configureBaseBT()
-        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
-        self.assertEqual(inOrderTraversal,[None, 20, None, 30, None, 40, None, 50, None, 60, None, 70, None, 80, None])
+        inOrderTraversal = myBst.InOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
 
     def testPostOrderTraversal(self):
         myBst = self.configureBaseBT()
-        inOrderTraversal = myBst.printPostOrderTraversal(myBst.root)
-        self.assertEqual(inOrderTraversal,[None, None, 20, None, None, 40, 30, None, None, 60, None, None, 80, 70, 50])
+        inOrderTraversal = myBst.PostOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[20, 40, 30, 60, 80, 70, 50])
     
-    
-    def testIsFullBinaryTree(self):
+    def testIsBalancedBinaryTree(self):
         myBst = self.configureBaseBT()
         self.assertEqual(myBst.isBalancedBinaryTree(myBst.root), True)
         myBst.insert(19)
         myBst.insert(18)
         myBst.insert(17)
         self.assertEqual(myBst.isBalancedBinaryTree(myBst.root), False)
-    
+        
+    def testIsFullBinaryTree(self):
+        myBst = self.configureBaseBT()
+        self.assertEqual(myBst.isFullBinaryTree(myBst.root), True)
+        myBst.insert(19)
+        print(myBst.InOrderTraversal(myBst.root))
+        self.assertEqual(myBst.isFullBinaryTree(myBst.root), False)
+        
     def testIsPerfectBinaryTree(self):
         pass
 

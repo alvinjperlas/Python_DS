@@ -185,37 +185,33 @@ class BinaryTree:
     # ====================================== #
     
     # InOrder: Left, Root, Right
-    def printInOrderTraversal(self, root):
+    def InOrderTraversal(self, root):
         retval = []
         if root != None:
-            retval += (self.printInOrderTraversal(root.left))
+            retval += (self.InOrderTraversal(root.left))
             retval.append(root.data)
-            retval+=(self.printInOrderTraversal(root.right))
-        else:
-            retval.append(None)
+            retval+=(self.InOrderTraversal(root.right))
+      
         return retval
         
     # PreOrder: Root, Left, Right, 
-    def printPreOrderTraversal(self, root):
+    def PreOrderTraversal(self, root):
         retval = []
         if root != None:
             retval.append(root.data)
-            retval += (self.printPreOrderTraversal(root.left))
-            retval+=(self.printPreOrderTraversal(root.right))
-        else:
-            retval.append(None)
+            retval += (self.PreOrderTraversal(root.left))
+            retval+=(self.PreOrderTraversal(root.right))
+        
         return retval
     
     # PostOrder: Left, Right, Root
-    def printPostOrderTraversal(self, root):
+    def PostOrderTraversal(self, root):
         retval = []
         if root != None:
-            retval += (self.printPostOrderTraversal(root.left))
-            retval+=(self.printPostOrderTraversal(root.right))
+            retval += (self.PostOrderTraversal(root.left))
+            retval+=(self.PostOrderTraversal(root.right))
             retval.append(root.data)
-            
-        else:
-            retval.append(None)
+
         return retval
     
     # ====================================== #
@@ -273,8 +269,18 @@ class BinaryTree:
     # A full Binary tree is a special type of binary tree in which every parent node/internal 
     # node has either two or no children.
     def isFullBinaryTree(self, root):
-        pass
-    
+        if root == None:
+            return True
+        else:
+            hasLeftChild =  root.left != None
+            hasRightChild =  root.right != None
+            if hasLeftChild and hasRightChild:
+                return self.isFullBinaryTree(root.left) and self.isFullBinaryTree(root.right)
+            elif hasLeftChild == False and hasRightChild == False:
+                return True
+            else:
+                return False
+
     # A perfect binary tree is a type of binary tree in which every internal node has exactly
     # two child nodes and all the leaf nodes are at the same level.
     def isPerfectBinaryTree(self, root):
