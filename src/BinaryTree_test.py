@@ -4,53 +4,111 @@ import unittest   # The test framework
 
 class Test_Queue_Array(unittest.TestCase):
     def setUp(self):
-        self.myBt = BinaryTree()
+        self.myBtvar = BinaryTree()
   
+    def configureBaseBT(self):
+        myBst = BinaryTree()
+        myBst.insert(50)
+        myBst.insert(30)
+        myBst.insert(20)
+        myBst.insert(40)
+        myBst.insert(70)
+        myBst.insert(60)
+        myBst.insert(80)
+        return myBst
+        
     def testSize(self):
-        self.myBt.insert(9)
-        self.assertEqual(self.myBt.size(), 1)
+        self.myBtvar.insert(9)
+        self.assertEqual(self.myBtvar.size(), 1)
 
     def testInsertNode(self):
-        pass
- 
+        myBst = self.configureBaseBT()
+        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
+        myBst.insert(10)
+        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[10, 20, 30, 40, 50, 60, 70, 80])
+        
     def testRemoveNode(self):
-        pass
+        myBst = self.configureBaseBT()
+        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
+        myBst.remove(50)
+        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[20, 30, 40, 60, 70, 80])
+        
     
     def testIsLeaf(self):
-        pass
-    
-    def testIsEmptyByAdding1000Items(self):
-        pass
+        myBst = self.configureBaseBT()
+        leafNode = myBst._search(20, myBst.root)
+        self.assertEqual(myBst.isLeaf(leafNode), True)
+        branchNode = myBst._search(30, myBst.root)
+        self.assertEqual(myBst.isLeaf(branchNode), False)
 
     def testGetLargestNode(self):
-        pass
-    
+        myBst = self.configureBaseBT()
+        maxNode = myBst.maxValueNode(myBst.root)
+        self.assertEqual(maxNode.data, 80)
+        myBst.remove(80)
+        maxNode = myBst.maxValueNode(myBst.root)
+        self.assertEqual(maxNode.data, 70)
+        myBst.remove(50)
+        maxNode = myBst.maxValueNode(myBst.root)
+        self.assertEqual(maxNode.data, 70)
+         
     def testGetParent(self):
-        pass
+        myBst = self.configureBaseBT()
+        parentNode = myBst.getParent(20)
+        self.assertEqual(parentNode.data, 30)
+        parentNode = myBst.getParent(30)
+        self.assertEqual(parentNode.data, 50)
+        parentNode = myBst.getParent(80)
+        self.assertEqual(parentNode.data, 70)     
 
     def testContains(self):
-        pass
-
-    def testSearch(self):
-        pass
+        myBst = self.configureBaseBT()
+        self.assertEqual(myBst.contains(50), True)
+        self.assertEqual(myBst.contains(20), True)
+        self.assertEqual(myBst.contains(30), True)
+        self.assertEqual(myBst.contains(40), True)
+        self.assertEqual(myBst.contains(80), True)
+        self.assertEqual(myBst.contains(1), False)
+        self.assertEqual(myBst.contains(2), False)
 
     def testTreeDepth(self):
-        pass
+        myBst = self.configureBaseBT()
+        treeDepth = myBst.getTreeDepth(myBst.root)
+        self.assertEqual(treeDepth, 3)
 
-    def testRebalance(self):
+    # heigh balanced BST is defined as 
+    # a binary tree in which the left and right subtrees 
+    # of every node differ in height by no more than 1.
+    def testIsBstBalanced(self):
         pass
 
     def testPreOrderTraversal(self):
-        pass
+        myBst = self.configureBaseBT()
+        PreOrderTraversal = myBst.printPreOrderTraversal(myBst.root)
+        self.assertEqual(PreOrderTraversal,[50, 30, 20, None, None, 40, None, None, 70, 60, None, None, 80, None, None])
 
     def testInOrderTraversal(self):
-        pass
+        myBst = self.configureBaseBT()
+        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[None, 20, None, 30, None, 40, None, 50, None, 60, None, 70, None, 80, None])
 
     def testPostOrderTraversal(self):
-        pass
+        myBst = self.configureBaseBT()
+        inOrderTraversal = myBst.printPostOrderTraversal(myBst.root)
+        self.assertEqual(inOrderTraversal,[None, None, 20, None, None, 40, 30, None, None, 60, None, None, 80, 70, 50])
+    
     
     def testIsFullBinaryTree(self):
-        pass
+        myBst = self.configureBaseBT()
+        self.assertEqual(myBst.isBalancedBinaryTree(myBst.root), True)
+        myBst.insert(19)
+        myBst.insert(18)
+        myBst.insert(17)
+        self.assertEqual(myBst.isBalancedBinaryTree(myBst.root), False)
     
     def testIsPerfectBinaryTree(self):
         pass

@@ -1,4 +1,17 @@
+# ========================================== #
+# Binary Tree Properties
+# 
+# 1. The maximum number of nodes at level 'x' of a binary tree is 2^x
+# 2. The maximum number of nodes in a binary tree of height 'h' is (2^h -1)
+# 3. In a binary Tree with N Nodes, minimum possible height or the minimum 
+#    number of levels is Log2 (N+1)
+# 4. A binary Tree with L Leaves has at least (|log2 L| + 1) levels
+# 5. In Binary Tree where every node has 0 or 2 children, the number of 
+#    leaf nodes is always one more than nodes with two children.
 
+# ========================================== #
+
+from turtle import right
 
 
 class BinaryTree:
@@ -15,13 +28,6 @@ class BinaryTree:
         self.root = None
         self.count = 0
       
-      
-    
-    def size(self):
-        return self.count
-
-    def isEmpty(self):
-        return self.count == 0
     # ====================================== #
     # ==========  Insert Operation ========= #
     # ====================================== #
@@ -74,67 +80,207 @@ class BinaryTree:
             return None
     
     def contains(self, data):
-        return None == self._search(data, self.root)
+        return None != self._search(data, self.root)
        
               
     # ====================================== #
     # ==========  Remove Operation ========= #
     # ====================================== #
       
+    # 3 cases for node removal  
+    # Case 1: Delete a leaf. just dereferrence from parent.
+    # Case 2: Node to be deleted only has 1 child.
+    # Case 3: Node to be deleted has 2 child. 
     def remove(self, data):
-        self._remove(data, self.root)
-
+        return self._remove(data, self.root)
         
     
-    def _remove(self, data):
-        self._remove(data, self.root)
-
-
-      
+    def _remove(self, data, currentNode):
+        
+        if currentNode == None:
+            return currentNode
+        
+        # data is more than currentNode
+        elif currentNode.data < data:
+            currentNode.right = self._remove(data, currentNode.right)
+        
+        # data is less than currentNode
+        elif currentNode.data > data:
+            currentNode.left = self._remove(data, currentNode.left)
+            
+        # data is same as currentNode    
+        else:
+            # case 2: 1 child only
+            if currentNode.left is None:
+                temp = currentNode.right
+                currentNode = None
+                self.count -= 1
+                return temp
+            elif currentNode.right is None:
+                temp = currentNode.left
+                currentNode = None
+                self.count -= 1
+                return temp
+            
+            # case 3: 2 childs
+            # get inorder  {left, root, right} successor
+            temp = self.minValueNode(currentNode.right)
+            
+            # swap data.
+            currentNode.data = temp.data
+            currentNode.right = self._remove(temp.data, currentNode.right)
+            self.count -= 1
+        
+        return currentNode
  
 
+    # ====================================== #
+    # ==========  Node Properties  ========= #
     # ====================================== #
 
     def isLeaf(self, node):
         return node.left == None and node.right == None
     
-    def getLargestNode(self, node):
-        pass
-    
-    def getParent(self, node):
-        pass
-    
+    def getParent(self, data):
+        searchNode = self._search(data, self.root)
+        return self._getParent(searchNode, self.root)
 
-      
+    
+    def _getParent(self, node, root):
+        if root == None:
+            return None
+        elif self._checkMatchForChildren(node.data, root):
+            return root
+        elif root.data > node.data:
+            return self._getParent(node, root.left)
+        elif root.data < node.data:
+            return self._getParent(node, root.right)
+        else:
+            return None
+    
+    def _checkMatchForChildren(self, data, root):
+        if root== None:
+            return False
+        elif root.left != None and root.left.data == data:
+            return True
+        elif root.right != None and root.right.data == data:
+            return True    
+        return False
+    
+    
+    def minValueNode(self, node):
+        current = node
+        while current.left != None:
+            current = current.left
+        return current
+    
+    def maxValueNode(self, node):
+        current = node
+        while current.right != None:
+            current = current.right
+        return current     
+    
     # ====================================== #
     # =============  Traversals  =========== #
     # ====================================== #
     
+    # InOrder: Left, Root, Right
+    def printInOrderTraversal(self, root):
+        retval = []
+        if root != None:
+            retval += (self.printInOrderTraversal(root.left))
+            retval.append(root.data)
+            retval+=(self.printInOrderTraversal(root.right))
+        else:
+            retval.append(None)
+        return retval
+        
+    # PreOrder: Root, Left, Right, 
+    def printPreOrderTraversal(self, root):
+        retval = []
+        if root != None:
+            retval.append(root.data)
+            retval += (self.printPreOrderTraversal(root.left))
+            retval+=(self.printPreOrderTraversal(root.right))
+        else:
+            retval.append(None)
+        return retval
     
-    def printInOrderTraversal(self):
+    # PostOrder: Left, Right, Root
+    def printPostOrderTraversal(self, root):
+        retval = []
+        if root != None:
+            retval += (self.printPostOrderTraversal(root.left))
+            retval+=(self.printPostOrderTraversal(root.right))
+            retval.append(root.data)
+            
+        else:
+            retval.append(None)
+        return retval
+    
+    # ====================================== #
+    # ======  Binary Tree Properties  ====== #
+    # ====================================== #   
+    
+    
+    def size(self):
+        return self.count
+
+    def isEmpty(self):
+        return self.count == 0
+    
+    def getTreeDepth(self, root):
+        if root == None:
+            return 0
+        else:
+            return 1 + max(self.getTreeDepth(root.left), self.getTreeDepth(root.right))
+
+
+
+
+    # A balanced binary tree, also referred to as a height-balanced binary tree, is defined
+    # as a binary tree in which the height of the left and right subtree of any node differ 
+    # by not more than 1.
+
+    # 1. difference between the left and the right subtree for any node is not more than one
+    # 2. the left subtree is balanced
+    # 3. the right subtree is balanced
+    def isBalancedBinaryTree(self, root):
+        if root == None:
+            return True
+        else:
+            leftDepth = self.getTreeDepth(root.left)
+            rightDepth = self.getTreeDepth(root.right)
+            delta =  abs(leftDepth - rightDepth) <= 1 
+            isLeftBalanced = self.isBalancedBinaryTree(root.left)
+            isRightBalanced = self.isBalancedBinaryTree(root.right)
+            return delta and isLeftBalanced and isRightBalanced
+    
+    
+    # A complete binary tree is a binary tree in which all the levels 
+    # are completely filled except possibly the lowest one, which is 
+    # filled from the left.
+
+    # A complete binary tree is just like a full binary tree, but with two major differences
+    # 1. All the leaf elements must lean towards the left.
+    # 2. The last leaf element might not have a right sibling i.e. 
+    #    a complete binary tree doesn't have to be a full binary tree.
+
+    def isCompleteBinaryTree(self, root):
         pass
     
-    def printPreOrderTraversal(self):
+    
+    # A full Binary tree is a special type of binary tree in which every parent node/internal 
+    # node has either two or no children.
+    def isFullBinaryTree(self, root):
         pass
     
-    def printPostOrderTraversal(self):
-        pass
-    
-    def getTreeDepth(self, node):
-        pass
-    
-    def isBalancedBinaryTree(self, node):
-        pass
-    
-    def isCompleteBInaryTree(self, node):
-        pass
-    
-    def isFullBinaryTree(self, node):
-        pass
-    
-    def isPerfectBinaryTree(self, node):
+    # A perfect binary tree is a type of binary tree in which every internal node has exactly
+    # two child nodes and all the leaf nodes are at the same level.
+    def isPerfectBinaryTree(self, root):
         pass
     
         
         
+    
     
