@@ -11,7 +11,8 @@
 
 # ========================================== #
 
-
+import math
+from operator import length_hint
 
 class BinaryTree:
     
@@ -266,14 +267,38 @@ class BinaryTree:
         # Get max depth.
         # recurse and pass depth +1 and have an array that counts the nodes on each level.
         # if we're at max level
-        nodeCntLists = []
-        pass
-    
-    def _verifyCompleteBT(self, root, level, nodeCntLists):
+        self._nodeCntLists = {}
         if root == None:
-            return
+            return True
         
-        pass
+        firstAssesment = self._verifyCompleteBT(self.root, 0)
+        # Cover only until the height-1 since height h is where the leafs should be located.
+        depth = len(self._nodeCntLists.keys()) - 1
+        for i in self._nodeCntLists.keys():
+            if i == depth:
+                break
+            maxNodesInLevel = math.pow(2,i)
+            if self._nodeCntLists[i] != maxNodesInLevel:
+                return False
+        return firstAssesment 
+            
+    
+    def _verifyCompleteBT(self, root, level):
+        if root == None:
+            return True
+        
+        elif root.left == None and root.right != None:
+            return False
+        
+        # First time recursion enters a new level.
+        if level in self._nodeCntLists.keys():
+            self._nodeCntLists[level] += 1
+        else:
+            self._nodeCntLists[level] = 1
+            
+        return self._verifyCompleteBT(root.left, level+1) and self._verifyCompleteBT(root.right, level+1)
+       
+
     
     # A full Binary tree is a special type of binary tree in which every parent node/internal 
     # node has either two or no children.

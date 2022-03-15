@@ -113,7 +113,14 @@ class Test_Queue_Array(unittest.TestCase):
         
         
     def testIsCompletetBinaryTree(self):
-        pass
+        myBst = self.configureBaseBT()
+        self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), True)
+        myBst.insert(19)
+        print(myBst.inOrderTraversal(myBst.root))
+        self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), True)
+        myBst.insert(41)
+        print(myBst.inOrderTraversal(myBst.root))
+        self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), False)
     
     def testIsPerfectBinaryTree(self):
         pass
