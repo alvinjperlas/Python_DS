@@ -108,7 +108,6 @@ class Test_Queue_Array(unittest.TestCase):
         myBst = self.configureBaseBT()
         self.assertEqual(myBst.isFullBinaryTree(myBst.root), True)
         myBst.insert(19)
-        print(myBst.inOrderTraversal(myBst.root))
         self.assertEqual(myBst.isFullBinaryTree(myBst.root), False)
         
         
@@ -116,14 +115,24 @@ class Test_Queue_Array(unittest.TestCase):
         myBst = self.configureBaseBT()
         self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), True)
         myBst.insert(19)
-        print(myBst.inOrderTraversal(myBst.root))
         self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), True)
         myBst.insert(41)
-        print(myBst.inOrderTraversal(myBst.root))
         self.assertEqual(myBst.isCompleteBinaryTree(myBst.root), False)
     
+    
     def testIsPerfectBinaryTree(self):
-        pass
+        myBst = self.configureBaseBT()
+        self.assertEqual(myBst.isPerfectBinaryTree(myBst.root), True)
+        myBst.insert(19)
+        myBst.insert(21)
+        self.assertEqual(myBst.isPerfectBinaryTree(myBst.root), False)
+        myBst.insert(39)
+        myBst.insert(41)
+        myBst.insert(59)
+        myBst.insert(61)
+        myBst.insert(79)
+        myBst.insert(81)
+        self.assertEqual(myBst.isPerfectBinaryTree(myBst.root), True)
 
 if __name__ == '__main__':
     unittest.main()

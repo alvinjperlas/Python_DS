@@ -286,18 +286,17 @@ class BinaryTree:
     def _verifyCompleteBT(self, root, level):
         if root == None:
             return True
-        
         elif root.left == None and root.right != None:
             return False
-        
-        # First time recursion enters a new level.
-        if level in self._nodeCntLists.keys():
-            self._nodeCntLists[level] += 1
         else:
-            self._nodeCntLists[level] = 1
-            
-        return self._verifyCompleteBT(root.left, level+1) and self._verifyCompleteBT(root.right, level+1)
-       
+            # First time recursion enters a new level.
+            if level in self._nodeCntLists.keys():
+                self._nodeCntLists[level] += 1
+            else:
+                self._nodeCntLists[level] = 1
+                
+            return self._verifyCompleteBT(root.left, level+1) and self._verifyCompleteBT(root.right, level+1)
+        
 
     
     # A full Binary tree is a special type of binary tree in which every parent node/internal 
@@ -318,9 +317,31 @@ class BinaryTree:
     # A perfect binary tree is a type of binary tree in which every internal node has exactly
     # two child nodes and all the leaf nodes are at the same level.
     def isPerfectBinaryTree(self, root):
-        pass
+        self._nodeCntLists = {}
+        if root == None:
+            return True
+        firstAssesment = self._verifyPerfectBT(self.root, 0)
+        # Cover only until the height-1 since height h is where the leafs should be located.
+        depth = len(self._nodeCntLists.keys()) - 1
+        for i in self._nodeCntLists.keys():
+            maxNodesInLevel = math.pow(2,i)
+            if self._nodeCntLists[i] != maxNodesInLevel:
+                return False
+        return firstAssesment 
     
-        
-        
-    
-    
+    def _verifyPerfectBT(self, root, level):
+        if root == None:
+            return True
+        elif root.left == None and root.right != None:
+            return False
+        elif root.left != None and root.right == None:
+            return False
+        else:
+            # First time recursion enters a new level.
+            if level in self._nodeCntLists.keys():
+                self._nodeCntLists[level] += 1
+            else:
+                self._nodeCntLists[level] = 1
+                
+            return self._verifyPerfectBT(root.left, level+1) and self._verifyPerfectBT(root.right, level+1)
+            
