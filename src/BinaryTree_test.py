@@ -88,7 +88,7 @@ class Test_Queue_Array(unittest.TestCase):
 
     def testInOrderTraversal(self):
         myBst = self.configureBaseBT()
-        inOrderTraversal = myBst.InOrderTraversal(myBst.root)
+        inOrderTraversal = myBst.inOrderTraversal(myBst.root)
         self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
 
     def testPostOrderTraversal(self):
@@ -108,7 +108,7 @@ class Test_Queue_Array(unittest.TestCase):
         myBst = self.configureBaseBT()
         self.assertEqual(myBst.isFullBinaryTree(myBst.root), True)
         myBst.insert(19)
-        print(myBst.InOrderTraversal(myBst.root))
+        print(myBst.inOrderTraversal(myBst.root))
         self.assertEqual(myBst.isFullBinaryTree(myBst.root), False)
         
         
