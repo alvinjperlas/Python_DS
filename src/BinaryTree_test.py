@@ -23,18 +23,18 @@ class Test_Queue_Array(unittest.TestCase):
 
     def testInsertNode(self):
         myBst = self.configureBaseBT()
-        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
-        self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
+        myInOrderTraversal = myBst.inOrderTraversal(myBst.root)
+        self.assertEqual(myInOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
         myBst.insert(10)
-        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
-        self.assertEqual(inOrderTraversal,[10, 20, 30, 40, 50, 60, 70, 80])
+        myInOrderTraversal = myBst.inOrderTraversal(myBst.root)
+        self.assertEqual(myInOrderTraversal,[10, 20, 30, 40, 50, 60, 70, 80])
         
     def testRemoveNode(self):
         myBst = self.configureBaseBT()
-        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        inOrderTraversal = myBst.inOrderTraversal(myBst.root)
         self.assertEqual(inOrderTraversal,[20, 30, 40, 50, 60, 70, 80])
         myBst.remove(50)
-        inOrderTraversal = myBst.printInOrderTraversal(myBst.root)
+        inOrderTraversal = myBst.inOrderTraversal(myBst.root)
         self.assertEqual(inOrderTraversal,[20, 30, 40, 60, 70, 80])
         
     
@@ -111,8 +111,27 @@ class Test_Queue_Array(unittest.TestCase):
         print(myBst.InOrderTraversal(myBst.root))
         self.assertEqual(myBst.isFullBinaryTree(myBst.root), False)
         
+        
+    def testIsCompletetBinaryTree(self):
+        pass
+    
     def testIsPerfectBinaryTree(self):
         pass
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
+# ========================================== #
+# Binary Tree Properties
+# 
+# 1. The maximum number of nodes at level 'x' of a binary tree is 2^x
+# 2. The maximum number of nodes in a binary tree of height 'h' is (2^h -1)
+# 3. In a binary Tree with N Nodes, minimum possible height or the minimum 
+#    number of levels is Log2 (N+1)
+# 4. A binary Tree with L Leaves has at least (|log2 L| + 1) levels
+# 5. In Binary Tree where every node has 0 or 2 children, the number of 
+#    leaf nodes is always one more than nodes with two children.
+
+# ========================================== #

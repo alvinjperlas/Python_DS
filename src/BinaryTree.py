@@ -11,7 +11,6 @@
 
 # ========================================== #
 
-from turtle import right
 
 
 class BinaryTree:
@@ -185,12 +184,12 @@ class BinaryTree:
     # ====================================== #
     
     # InOrder: Left, Root, Right
-    def InOrderTraversal(self, root):
+    def inOrderTraversal(self, root):
         retval = []
         if root != None:
-            retval += (self.InOrderTraversal(root.left))
+            retval += (self.inOrderTraversal(root.left))
             retval.append(root.data)
-            retval+=(self.InOrderTraversal(root.right))
+            retval+=(self.inOrderTraversal(root.right))
       
         return retval
         
@@ -263,8 +262,18 @@ class BinaryTree:
     #    a complete binary tree doesn't have to be a full binary tree.
 
     def isCompleteBinaryTree(self, root):
+        # useful info: property 1, 3
+        # Get max depth.
+        # recurse and pass depth +1 and have an array that counts the nodes on each level.
+        # if we're at max level
+        nodeCntLists = []
         pass
     
+    def _verifyCompleteBT(self, root, level, nodeCntLists):
+        if root == None:
+            return
+        
+        pass
     
     # A full Binary tree is a special type of binary tree in which every parent node/internal 
     # node has either two or no children.
