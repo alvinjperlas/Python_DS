@@ -4,13 +4,14 @@
 # parent = floor((n-1)/2)
 
 
+from this import d
+
+
 class MinHeaps:
     
     def __init__(self):
         self.heapList = []
-        self.size = 0
-        
-    
+         
     # ======================================== #
     # getMini(): 
     # It returns the root element of Min Heap. 
@@ -18,7 +19,6 @@ class MinHeaps:
     # ======================================== #
     def getMin(self):
         return self.heapList[0]
-    
     
     # ======================================== #
     # extractMin(): 
@@ -29,14 +29,13 @@ class MinHeaps:
     # after removing root.
     # ======================================== #
     def extractMin(self):
-        if self.size < 2:
+        if (len(self.heapList)-1) < 2:
             return
         minVal = self.heapList[0]
-        maxVal = self.heapList[self.size]
+        maxVal = self.heapList[len(self.heapList)-1]
         self.heapList[0] = maxVal
-        self.heapList[self.size] = minVal
+        self.heapList[len(self.heapList)-1] = minVal
         self.heapList.pop()
-        self.size -= 1
         self._percolateDown(0)
         return minVal
     
@@ -52,13 +51,18 @@ class MinHeaps:
     # ======================================== #
     def _percolateDown(self,dataIdx):
         currentIdx = dataIdx
-        while currentIdx < self.size-1:
+        while currentIdx < (len(self.heapList)-1):
             swapWith = self._getSmallerChild(currentIdx)
-            if self.heapList[swapWith] > self.heapList[currentIdx]:
-                swapValue = self.heapList[currentIdx]
-                self.heapList[currentIdx] = self.heapList[swapWith]
-                self.heapList[swapWith] = swapValue
-            currentIdx = swapWith
+            if swapWith == None:
+                return
+            elif (swapWith > len(self.heapList)-1):
+                return
+            else:
+                if self.heapList[swapWith] < self.heapList[currentIdx]:
+                    swapValue = self.heapList[currentIdx]
+                    self.heapList[currentIdx] = self.heapList[swapWith]
+                    self.heapList[swapWith] = swapValue
+                currentIdx = swapWith
         
     
     # ======================================== #
@@ -93,8 +97,7 @@ class MinHeaps:
     # ======================================== #
     def insert(self, data):
         self.heapList.append(data)
-        self.size += 1
-        self.percolateUP(self.size)
+        self._percolateUp(len(self.heapList)-1)
     
     
     # ======================================== #
@@ -107,22 +110,18 @@ class MinHeaps:
     # extractMin() to remove the key.
     # ======================================== #
     def delete(self, dataIdx):
-        if dataIdx >self.size:
+        if dataIdx >len(self.heapList)-1:
             return
-        
         toDeleteVal = self.heapList[dataIdx]
-        maxVal = self.heapList[self.size]
+        maxVal = self.heapList[len(self.heapList)-1]
         self.heapList[dataIdx] = maxVal
-        self.heapList[self.size] = toDeleteVal
+        self.heapList[len(self.heapList)-1] = toDeleteVal
         self.heapList.pop()
-        self.size -= 1
         self._percolateDown(dataIdx)
         return toDeleteVal
     
-    
-
     def _getParentId(self, idx):
-        return (idx-1)//2
+        return (idx-1) // 2
     
     def _getLeftChildId(self, idx):
         return 2*idx + 1
@@ -131,12 +130,30 @@ class MinHeaps:
         return 2*idx + 2
     
     def _getSmallerChild(self, idx):
-        lc = self.heapLists[self._getLeftChildId(idx)]
-        rc = self.heapLists[self.getRightCHildId(idx)]
-        return min(lc, rc)
+        leftIdx = self._getLeftChildId(idx)
+        rightIdx = self._getRightChildId(idx)
+        isLeftOutofBounce = leftIdx > len(self.heapList) -1
+        isRightOutofBounce = rightIdx > len(self.heapList) -1
+        
+        if isLeftOutofBounce and isRightOutofBounce:
+            return None
+
+        elif isLeftOutofBounce:
+            return rightIdx
+            
+        elif isRightOutofBounce:
+            return leftIdx
+        
+        else:  
+            lc = self.heapList[leftIdx]
+            rc = self.heapList[rightIdx]
+            if min(lc,rc) == lc:
+                return leftIdx
+            return rightIdx
         
         
-        
+    def _getHeap(self):
+        return self.heapList
         
         
         
