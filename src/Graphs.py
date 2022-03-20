@@ -1,9 +1,3 @@
-
-
-
-
-
-
     
 # Nodes    
 class Vertex:
@@ -34,10 +28,34 @@ class Vertex:
         return self.visited
     
     
-
-
 class Graph:
     def __init__(self):
-        pass
+        self.allVertex = {}
     
+    def addVertex(self, key):
+        newVertex = Vertex(key)
+        self.allVertex[key] = newVertex
+        return newVertex
     
+    def getVertex(self, key):
+        return None if not self.containsVertex(key) else self.vertLallVertexist[key]
+    
+    def containsVertex(self, key):
+        return key in self.allVertex
+    
+    def addEdge(self, vertex1, vertex2, weight):
+        
+        if not self.containsVertex(vertex1):  
+            self.addVertex(vertex1)                
+        if not self.containsVertex(vertex2):            
+            self.addVertex(vertex2)                   
+            
+        # Add (Edges, Weight) here
+        self.vertList[vertex1].addNeighbor(self.vertList[vertex2], weight)    
+    
+    def getVertices(self):
+        return self.allVertex.keys()
+    
+    def printGraph(self):
+        for x in self.allVertex:
+            print("{} - {}".format(x, self.vertList[x]))
