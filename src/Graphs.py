@@ -59,3 +59,32 @@ class Graph:
     def printGraph(self):
         for x in self.allVertex:
             print("{} - {}".format(x, self.vertList[x]))
+            
+
+class GraphScenarios:
+    def __init__(self):
+        pass
+    
+    def dfs(self):
+        pass
+    
+    def bfs(self):
+        pass
+    
+    def unionFind(self):
+        pass
+    
+    def cycleFind(self):
+        pass
+    
+    def biPartition(self):
+        pass
+    
+    def topologicalSort(self):
+        pass
+    
+    def findShortestPath(self):
+        pass
+    
+    
+    
