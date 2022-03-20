@@ -19,7 +19,7 @@ class Test_Heaps(unittest.TestCase):
     def testgetMin(self):
         myHeap = MinHeaps()
         myHeap.insert(10)
-        self.assertEqual(myHeap.size, 1)
+        self.assertEqual(myHeap.size(), 1)
         self.assertEqual(myHeap.getMin(), 10)
         myHeap.insert(8)
         self.assertEqual(myHeap.getMin(), 8)

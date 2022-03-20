@@ -20,6 +20,9 @@ class MinHeaps:
     def getMin(self):
         return self.heapList[0]
     
+    def size(self):
+        return len(self.heapList)
+    
     # ======================================== #
     # extractMin(): 
     # Removes the minimum element from MinHeap. 
