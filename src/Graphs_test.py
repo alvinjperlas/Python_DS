@@ -6,7 +6,7 @@ class Test_Graphs(unittest.TestCase):
     def setUp(self):
         pass
       
-    def _getTestHeap(self):
+    def _getTestGraph(self):
         myGraph = Graph()
         myGraph.addVertex('A')
         myGraph.addVertex('B')
